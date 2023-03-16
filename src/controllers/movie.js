@@ -67,3 +67,20 @@ exports.updateMovieById = async (req, res, next) => {
     next(error);
   }
 };
+
+// delete a movie by id
+exports.deleteMovieById = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const deleted = await Movie.destroy({
+      where: { id },
+    });
+    if (deleted) {
+      res.status(204).json({ message: "Movie deleted!" });
+    } else {
+      res.status(404).json({ message: "Movie not found!" });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
