@@ -24,3 +24,19 @@ exports.getMovieById = async (req, res, next) => {
     next(error);
   }
 };
+
+// create a new movie
+exports.createMovie = async (req, res, next) => {
+  const { title, description, releaseDate, imageUrl } = req.body;
+  try {
+    const movie = await Movie.create({
+      title,
+      description,
+      releaseDate,
+      imageUrl,
+    });
+    res.status(201).json(movie);
+  } catch (error) {
+    next(error);
+  }
+};
