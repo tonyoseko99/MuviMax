@@ -40,3 +40,30 @@ exports.createMovie = async (req, res, next) => {
     next(error);
   }
 };
+
+// update a movie by id
+exports.updateMovieById = async (req, res, next) => {
+  const { id } = req.params;
+  const { title, description, releaseDate, imageUrl } = req.body;
+  try {
+    const [updated] = await Movie.update(
+      {
+        title,
+        description,
+        releaseDate,
+        imageUrl,
+      },
+      {
+        where: { id },
+      }
+    );
+    if (updated) {
+      const updatedMovie = await Movie.findByPk(id);
+      res.json(updatedMovie);
+    } else {
+      res.status(404).json({ message: "Movie not found!" });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
