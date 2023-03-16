@@ -10,5 +10,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     {}
   );
-  
+
+  Movie.associate = (models) => {
+    // A movie can have many ratings
+    Movie.hasMany(models.Rating, { as: "ratings" });
+  };
+
+  return Movie;
 };
